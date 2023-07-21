@@ -123,10 +123,32 @@ When loaded:
 
 ## Troubleshooting
 
-If the login popup shows then disappears, check the console for errors.
+If the login popup opens then immediately closes, check the console for errors.
 
-If the login popup shows your site not the login page, it's likely that your redirect URI doesn't match what is entered in the dashboard. Make sure it matches and that it's a full URI. If you're very quick you can also copy the hash from the popup's URL, then `decodeURIComponent()` that text to see what any actual error is.
+If the login popup opens but doesn't show the Microsoft login form, it's likely that your redirect URI doesn't match what is entered in the dashboard. Make sure it matches and that it's a full URI.
 
+Note that the popup's URL will contain information about the error in the **hash**:
+
+```
+https://<your_domain>/<your_redirect_path>#error=redirect_uri_mismatch&error_description=AADB2C90006%3a+The+redirect+URI+%27http%3a%2f%2flocalhost%3a8080%2fauth%2fredirect%2flogin%27+provided+in+the+request+is+not+registered+for+the+client+id+%27385685cf-8080-44d5-a67a-e192a4324351%27.%0d%0aCorrelation+ID%3a+c277eb37-ec03-4ae7-8d06-ee6a69cf60f9%0d%0aTimestamp%3a+2023-07-21+08%3a35%3a38Z%0d%0a&state=eyJpZCI6ImQwMmY4YTFmLTBmNTctNDFjZi04YjdhLTk0ODgxNTY0MmE2OSIsIm1ldGEiOnsiaW50ZXJhY3Rpb25UeXBlIjoicG9wdXAifX0%3d
+```
+
+To make the messages readable, run the following code in the popup's DevTools console:
+
+```js
+var u = new URL(location.href)
+var p = new URLSearchParams(u.hash.substr(1))
+Array.from(p.entries()).forEach(([key, value]) => console.log(`[${key}]: ${value}`))
+```
+```
+[error]: redirect_uri_mismatch
+[error_description]: AADB2C90006: The redirect URI 'http://localhost:8080/auth/redirect/login' provided in the request is not registered for the client id '385685cf-8080-44d5-a67a-e192a4324351'.
+Correlation ID: c277eb37-ec03-4ae7-8d06-ee6a69cf60f9
+Timestamp: 2023-07-21 08:35:38Z
+[state]: eyJpZCI6ImQwMmY4YTFmLTBmNTctNDFjZi04YjdhLTk0ODgxNTY0MmE2OSIsIm1ldGEiOnsiaW50ZXJhY3Rpb25UeXBlIjoicG9wdXAifX0=
+```
+
+Note that if using the [redirect strategy](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/initialization.md#choosing-an-interaction-type), then the URL with the error may only show for a split second before redirecting. In that case, you'll have to be quick to select and copy the URL (!) then you can use the code above to display the error. 
 
 ## Next steps
 
