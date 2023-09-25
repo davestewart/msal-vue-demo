@@ -14,7 +14,7 @@ export type MaybeAccount = AccountInfo | null
  * MSAL instance
  */
 export const msal = new PublicClientApplication(config)
-
+await msal.initialize()
 /**
  * Auth service
  */
