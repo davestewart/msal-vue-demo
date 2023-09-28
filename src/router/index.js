@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { auth } from '@/stores/auth'
+import { auth } from '../stores/auth'
 import { hook, route, VueNavigationClient } from './helpers'
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     route('/', 'Home'),
-    route('/user', 'User'),
+    route('/dashboard', 'Dashboard'),
     hook('/login', auth.login),
     hook('/logout', auth.logout),
     route(unmatched, '404'),

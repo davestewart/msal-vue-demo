@@ -1,12 +1,9 @@
 import { NavigationClient } from '@azure/msal-browser'
-import type { RouteRecordRaw } from 'vue-router'
-import type { NavigationOptions } from '@azure/msal-browser'
-import type { Router } from 'vue-router'
 
 /**
  * Create component route
  */
-export function route (path: string, view: string): RouteRecordRaw {
+export function route (path, view) {
   return {
     path,
     component: () => import(`../views/${view}View.vue`)
@@ -16,7 +13,7 @@ export function route (path: string, view: string): RouteRecordRaw {
 /**
  * Create hook route
  */
-export function hook (path: string, callback: Function): RouteRecordRaw {
+export function hook (path, callback) {
   return {
     path,
     component: { render: () => null },
@@ -33,9 +30,8 @@ export function hook (path: string, callback: Function): RouteRecordRaw {
  * Override MSAL route navigation
  */
 export class VueNavigationClient extends NavigationClient {
-  private router: Router
-
-  constructor (router: Router) {
+  
+  constructor (router) {
     super()
     this.router = router
   }
@@ -43,14 +39,14 @@ export class VueNavigationClient extends NavigationClient {
   /**
    * Only called during redirects
    */
-  navigateExternal (url: string, options: NavigationOptions): Promise<boolean> {
+  navigateExternal (url, options) {
     return super.navigateExternal(url, options)
   }
 
   /**
    * Only called during popup completion
    */
-  async navigateInternal (url: string, options: NavigationOptions): Promise<boolean> {
+  async navigateInternal (url, options) {
     const path = url.replace(location.origin, '')
     options.noHistory
       ? await this.router.replace(path)
