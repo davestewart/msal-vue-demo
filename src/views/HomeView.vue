@@ -4,6 +4,14 @@
   <p v-else>Click to <router-link to="/login">login</router-link>.</p>
 </template>
 
-<script lang="ts" setup>
-import { auth } from '@/stores/auth'
+<script>
+  import { auth } from '../stores/auth'
+  export default {
+  setup() {
+      // You can use 'auth' directly in the setup function
+      return {
+        auth
+      }
+    },
+  }
 </script>
