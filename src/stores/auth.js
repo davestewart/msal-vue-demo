@@ -1,13 +1,11 @@
 import { ref, reactive } from 'vue'
-import { Auth } from '@/services/auth'
-import type { MaybeAccount } from '@/services/auth'
-import type { NavigationClient } from '@azure/msal-browser'
+import { Auth } from '../services/auth'
 
-export const initialized = ref(false)
-export const account = ref<MaybeAccount>(null)
-export const error = ref<string>()
+let initialized = ref(false);
+let account = ref(null);
+let error = ref('');
 
-async function initialize (client?: NavigationClient) {
+async function initialize (client) {
   if (initialized.value === true) {
     return account.value
   }

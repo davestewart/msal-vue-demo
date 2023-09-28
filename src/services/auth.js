@@ -1,20 +1,17 @@
-import type { AccountInfo, AuthenticationResult, PopupRequest, SilentRequest } from '@azure/msal-browser'
 import {
   BrowserAuthError,
   InteractionRequiredAuthError,
   NavigationClient,
   PublicClientApplication
 } from '@azure/msal-browser'
-import { config, scopes } from '@/config/auth'
-
-// type
-export type MaybeAccount = AccountInfo | null
+import { config, scopes } from '../config/auth'
 
 /**
  * MSAL instance
  */
 export const msal = new PublicClientApplication(config)
 await msal.initialize()
+
 /**
  * Auth service
  */
@@ -22,7 +19,7 @@ export const Auth = {
   /**
    * Initialize and return active account
    */
-  async initialize (client?: NavigationClient): Promise<MaybeAccount> {
+  async initialize (client) {
     // start msal
     await msal.handleRedirectPromise()
 
@@ -44,8 +41,8 @@ export const Auth = {
   /**
    * Login
    */
-  async login (): Promise<MaybeAccount> {
-    const request: PopupRequest = {
+  async login () {
+    const request = {
       redirectUri: config.auth.redirectUri,
       scopes,
     }
@@ -58,7 +55,7 @@ export const Auth = {
         // set active account
         return this.setAccount(result.account)
       })
-      .catch((error: BrowserAuthError) => {
+      .catch((error) => {
         // if we get stuck, clear session and attempt to log in again
         if (error.errorCode === 'interaction_in_progress') {
           this.reset()
@@ -82,7 +79,7 @@ export const Auth = {
    * Get token for api
    */
   async getToken () {
-    const request: SilentRequest = {
+    const request = {
       scopes
     }
     return msal
@@ -90,13 +87,13 @@ export const Auth = {
       .acquireTokenSilent(request)
 
       // attempt login popup if this fails
-      .catch(async (error: unknown) => {
+      .catch(async (error) => {
         if (error instanceof InteractionRequiredAuthError) {
           return msal.acquireTokenPopup(request)
         }
         throw error
       })
-      .then((result: AuthenticationResult) => {
+      .then((result) => {
         return result.accessToken
       })
   },
@@ -105,7 +102,7 @@ export const Auth = {
    * Set active account
    * @private
    */
-  setAccount (account: MaybeAccount): MaybeAccount {
+  setAccount (account) {
     msal.setActiveAccount(account)
     return account
   },

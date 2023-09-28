@@ -1,11 +1,10 @@
-import type { Configuration } from '@azure/msal-browser'
 import { LogLevel } from '@azure/msal-browser'
 
 export const scopes = [
   import.meta.env.VITE_AUTH_SCOPE
 ]
 
-export const config: Configuration = {
+export const config = {
   // required
   auth: {
     // must match info in dashboard
@@ -18,7 +17,7 @@ export const config: Configuration = {
     // login redirect; must match path in dashboard
     redirectUri: `${location.origin}/auth/redirect/login`,
   },
-
+  
   // optional
   system: {
     loggerOptions: {
@@ -28,7 +27,7 @@ export const config: Configuration = {
   }
 }
 
-function loggerCallback (level: LogLevel, message: string, containsPii: boolean) {
+function loggerCallback (level, message, containsPii) {
   if (!containsPii) {
     const parts = message.split(' : ')
     const text = parts.pop()

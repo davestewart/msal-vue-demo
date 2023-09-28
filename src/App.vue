@@ -1,28 +1,48 @@
 <template>
-  <!-- menu -->
-  <nav>
-    <router-link to="/">Home</router-link>
-    <template v-if="auth.account">
-      <router-link to="/user">User</router-link>
-      <router-link to="/logout">Logout</router-link>
-    </template>
-  </nav>
-
-  <!-- view -->
-  <main>
-    <RouterView />
-  </main>
-
-  <!-- error -->
-  <div id="error" v-if="auth.error">{{ auth.error }}</div>
+  <div class="container">
+    <!-- menu -->
+    <nav>
+      <template v-if="auth.account">
+        <router-link to="/">Home</router-link>
+        <router-link to="/dashboard">Dashboard</router-link>
+        <router-link to="/logout">Logout</router-link>
+      </template>
+    </nav>
+    <!-- view -->
+    <main>
+      <RouterView />
+    </main>
+    <!-- error -->
+    <div id="error" v-if="auth.error">{{ auth.error }}</div>
+    </div>
 </template>
+ 
+<script>
+  import { RouterLink, RouterView } from 'vue-router'
+  import { auth } from './stores/auth'
+  import 'bootstrap/dist/css/bootstrap.min.css';
 
-<script lang="ts" setup>
-import { RouterLink, RouterView } from 'vue-router'
-import { auth } from '@/stores/auth'
+  export default {
+    name: 'App',
+    setup() {
+      return {
+        auth
+      }
+    },
+  }
 </script>
 
 <style lang="scss">
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
 html, body {
   line-height: 1.6;
   font-size: 15px;
@@ -91,4 +111,5 @@ pre {
   text-align: right;
   color: red;
 }
+
 </style>
