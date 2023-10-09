@@ -12,7 +12,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@azure/msal-browser": "^2.30.0",
+    "@azure/msal-browser": "^3.2.0",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },

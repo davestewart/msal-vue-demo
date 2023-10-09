@@ -24,6 +24,7 @@ export const Auth = {
    */
   async initialize (client?: NavigationClient): Promise<MaybeAccount> {
     // start msal
+    await msal.initialize()
     await msal.handleRedirectPromise()
 
     // hook into application router
@@ -49,6 +50,7 @@ export const Auth = {
       redirectUri: config.auth.redirectUri,
       scopes,
     }
+    await msal.initialize()
     return msal
       .loginPopup(request)
       .then(result => {
