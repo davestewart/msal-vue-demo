@@ -38,26 +38,10 @@ nav a {
   display: inline-block;
   border-left: 1px solid #CCC;
   padding: 0 .5rem;
-  color: #BBB;
 }
 nav a:first-child {
   margin-left: -.5rem;
   border-left: none;
-}
-
-a {
-  text-decoration: none;
-  color: dodgerblue;
-}
-a:hover {
-  text-decoration: underline;
-}
-a:hover {
-  color: black;
-}
-a.router-link-active {
-  color: dodgerblue;
-  pointer-events: none;
 }
 
 h1, h2, h3 {
