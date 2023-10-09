@@ -22,7 +22,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import { auth } from '@/stores/auth'
 </script>
 
-<style lang="scss">
+<style lang="css">
 html, body {
   line-height: 1.6;
   font-size: 15px;
@@ -34,37 +34,14 @@ main, nav {
   margin: 1rem;
 }
 
-nav {
- a {
-    display: inline-block;
-    border-left: 1px solid #CCC;
-    padding: 0 .5rem;
-    color: #BBB;
-  }
-
-  a:first-child {
-    margin-left: -.5rem;
-    border-left: none;
-  }
+nav a {
+  display: inline-block;
+  border-left: 1px solid #CCC;
+  padding: 0 .5rem;
 }
-
-a {
-  text-decoration: none;
-  color: dodgerblue;
-
-  &:hover {
-    text-decoration: underline;
-  }
-
-  &:hover {
-    color: black;
-  }
-
-  &.router-link-active {
-    color: dodgerblue;
-    pointer-events: none;
-  }
-
+nav a:first-child {
+  margin-left: -.5rem;
+  border-left: none;
 }
 
 h1, h2, h3 {
